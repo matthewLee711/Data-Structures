@@ -25,12 +25,13 @@ int main()
 	string match1Data;
 
 	string team1Data;
+	string team2Data;
 
 	//While loop to send team data to appropriate places
 	int teamCounter = 0;
 	while (getline(team1, team1Data))
 	{
-		cout << team1Data << endl;
+		//cout << team1Data << endl;
 		//send team name to organizer
 		if(teamCounter == 0)
 		{
@@ -44,6 +45,24 @@ int main()
 		teamCounter++;
 	}
 
+	//While loop to send team data to appropriate places
+	int teamCounter2 = 0;
+	while (getline(team2, team2Data))
+	{
+		//cout << team2Data << endl;
+		//send team name to organizer
+		if (teamCounter2 == 0)
+		{
+			game.teamNameStore2(team2Data);
+		}
+		else
+		{
+			game.teamDataOrganizer2(team2Data);
+		}
+		//Counter to decide where information goes
+		teamCounter2++;
+	}
+
 	//While loop to send match data to appropriate places
 	int matchCounter = 0;
 	while (getline(match1, match1Data))
@@ -55,5 +74,8 @@ int main()
 
 	//Write information to file
 	game.writeToFile();
+
+	//output information
+	game.print();
 
 }
