@@ -7,7 +7,7 @@ class LaserTag
 {
 private:
 	//Match variables
-	//int tagger;
+	int taggerId;
 	//int target;
 	//int matchTime;
 	//int hitLocation;
@@ -28,6 +28,12 @@ private:
 	string matchLineTeam;
 	string matchLineTeam2;
 
+	//vector to store team1 ID and Name of person
+	vector <string> team1Id;
+
+	//vector to store team1 ID and Name of person
+	vector <string> team2Id;
+
 	//int array to hold id's of tagger players
 	vector <int> tagger;
 
@@ -41,10 +47,10 @@ private:
 	int total;
 
 	//dynamically allocated array to hold match info
-	int *match1Info = new int[100];
+	int *match1Info = new int[];
 
 	//vector for match information
-	vector <int> matchHolder;
+	//vector <int> matchHolder;
 
 
 	//create a multiset, so you can easily grab points and whos been tagged?
@@ -54,7 +60,7 @@ private:
 public:
 	//constructor
 	LaserTag();
-	
+
 	//team functions
 	void teamNameStore(string team);
 
@@ -71,10 +77,13 @@ public:
 	//Number of players 
 	void playerCount(string numberOfPlayers);
 
+	//Write Medium Verbosity
+	void mediumVerbosity(int token, string idTaker);
+
 	//write to file
 	void writeToFile();
 
-	//Debug Print
+	//Print
 	void print();
 
 };

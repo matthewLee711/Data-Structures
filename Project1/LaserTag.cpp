@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <algorithm>
 #include "LaserTag.h"
 
 //constructor
@@ -41,6 +42,17 @@ void LaserTag::teamDataOrganizer(string teamData)
 	while ((pos = matchLineTeam.find(delimiter)) != std::string::npos) {
 		token = matchLineTeam.substr(0, pos);
 		//std::cout << token << std::endl;//output info from token
+
+		//Send token to function to count who's been hit
+		LaserTag::taggerId = stoi(token);
+		//Medium Verbosity
+		mediumVerbosity(taggerId, matchLineTeam);
+
+
+		//make sure to put matchline team into string vector
+		cout << "output matchline: " << matchLineTeam << endl;
+
+
 		matchLineTeam.erase(0, pos + delimiter.length());//delete and move up
 	}
 
@@ -79,7 +91,7 @@ void LaserTag::playerCount(string numberOfPlayers)
 	LaserTag::playerCounter = stoi(numberOfPlayers);
 }
 
-//Take match and delete spaces
+//Take match: delete spaces and sort data into vectors
 void LaserTag::matchInformation(string matchData)
 {
 	//string delimeter to get rid of spaces
@@ -116,7 +128,7 @@ void LaserTag::matchInformation(string matchData)
 		//if it is not time, player will be separated into groups
 		else {
 			//if statement to send people to tagger
-			if(infoCounter == 0)
+			if (infoCounter == 0)
 			{
 				//send to tagger vector
 				tagger.push_back(playerData);
@@ -129,9 +141,9 @@ void LaserTag::matchInformation(string matchData)
 				tagged.push_back(playerData);
 				infoCounter++;
 			}
-			//total up information store in array
-			total = total + playerData;
-			cout << "total " << infoCounter <<": " << total << endl;
+			//total up information store in array (DEBUGGER)
+			//total = total + playerData;
+			//cout << "total " << infoCounter << ": " << total << endl;
 			//infoCounter++;
 		}
 
@@ -143,21 +155,46 @@ void LaserTag::matchInformation(string matchData)
 	//figure out how to get each specific piece of data.
 	//IDEAS: extract data from each team, then collect data from matches based on teams
 	//print();
-	
+
 	//convert string into int so can put into int array
 	//LaserTag::playerData = stoi(token);
 	//loop reads/adds exact information to array based on playerCounter 
 	//for (int i = 0; i < 100; i++) match1Info[i] = playerData;
 }
 
+//write Medium Verbosity
+void LaserTag::mediumVerbosity(int token, string idTaker)
+{
+	ofstream mediumVerbosity;
+	mediumVerbosity.open("mediumVerbosity.txt");
+
+	//store into vector to be accessed
+	team1Id.push_back(idTaker);
+
+	//token of player id stored and will be compared to tagger vector
+	taggerId = token;
+
+	//if search algorithm to search vector for "Tagger" and count
+	if (find(tagger.begin(), tagger.end(), taggerId) != tagger.end())
+	{
+		cout << "Alright";
+	}
+	else
+		cout << "no";
+
+
+	//while loop to search vector "Tagged" and count -- be written to file
+
+	//medium Verbosity << 
+}
+
 void LaserTag::writeToFile()
 {
 	//low verbosity
 	ofstream lowVerbosity;
-	lowVerbosity.open("lowVerbosity.txt");
+	lowVerbosity.open("team1test.txt");
 	lowVerbosity << teamName << " had " << total << endl
 		<< teamName2 << " had " << total;//matchLine
-
 }
 
 void LaserTag::print()
@@ -167,10 +204,11 @@ void LaserTag::print()
 	{
 		cout << *i << ' ';
 	}
+	cout << endl;
 	//print vector of tagged
-	for (vector<int>::const_iterator i = tagged.begin(); i != tagger.end(); ++i)
+	for (vector<int>::const_iterator i2 = tagged.begin(); i2 != tagged.end(); ++i2)
 	{
-		cout << *i << ' ';
+		cout << *i2 << ' ';
 	}
 
 	//cout << "Grab last number in match: " << matchLine << endl;
