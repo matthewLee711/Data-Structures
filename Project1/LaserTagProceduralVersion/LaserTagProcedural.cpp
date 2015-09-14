@@ -6,10 +6,6 @@ using namespace std;
 
 
 //functions
-void tagger(int tagger)
-{
-	
-}
 
 // This function gets an integer from a string with a specfied column
 // and returns the value in that column
@@ -297,7 +293,6 @@ int main(int playerData)
 	int matchCounter = 0;
 	while (getline(match1, matchData))
 	{
-		cout << matchData << endl;
 		//if match counter is zero, dynamically allocate memory for arrays
 		if (matchCounter == 0)
 		{
@@ -305,6 +300,12 @@ int main(int playerData)
 			//dynamic memory allocation for arrays
 			teamNumberOfTags = new int[teamSize];
 			teamScore = new int[teamSize];
+
+			for (int i = 0; i < teamSize; i++)
+			{
+				teamNumberOfTags[i] = 0;
+				teamScore[i] = 0;
+			}
 		}
 		//This counts how many times who tagged who and stores this into 2D array, 
 		//This also counts points for each player and stores this into according arrays
@@ -313,28 +314,43 @@ int main(int playerData)
 			//cout << "MatchDataLine" << matchCounter << " " << matchData << endl;
 			//1st column of 2D is used to keep track of how many times someone hit someone else
 			//Everytime someone is hit, this goes to the 1st column and the id (row) is increased by one 
-
+			cout << "MatchData passed: " << matchData << endl;
 			int tagY = getIntFromString(matchData, 1);//y coordinate in 2D array
+			cout << "tagY: " << tagY << endl;
 			int tagX = getIntFromString(matchData, 2);//x coordinate in 2D array
-			
+			cout << "tagX: " << tagX << endl;
 			//This goes to exact position in 2D array and tracks who hit who. Extra hits are added on top of existing number
-			matchInformationStore[tagX +  (tagY * teamSize)]++;
+			matchInformationStore[tagX +  (tagY * teamSize)]= matchInformationStore[tagX + (tagY * teamSize)]+1;
+
+			cout << "MatchInformation Store being passed: " << matchInformationStore[tagX + (tagY * teamSize)] << endl;
 			//matchInformationStore[tagX + (tagY * teamSize)]++;
 
-			teamNumberOfTags[tagY]++;//Keeps track of number of tags each player got
+			teamNumberOfTags[tagY - 1]++;//Keeps track of number of tags each player got
+			//teamNumberOfTags[5] = 4;
 			teamScore[tagY] = teamScore[tagY] + getIntFromString(matchData, 4);//Keeps score for each player
+			
 
 		}//End of else
 
 		matchCounter++;
 	}
 
+	//MEDIUM VERBOSITY -- How many hits each person got
+	for (int i = 0; i < teamSize; i++) cout << "TeamNumber of tags " << teamIndividualNames[i] << " hit: " << teamNumberOfTags[i] << endl;
+	
+
+	//for (int i = 0; i < teamSize; i++) cout << "TeamSCore" << teamScore[i] << endl;
+	//Medium Verbosity -- How many points each person got
+	for (int i = 0; i < teamSize; i++) cout << "TeamScore " << teamIndividualNames[i] << " got: " << teamScore[i] << endl;
+
 	//debug output statement for matchInformationStore
+	//int k = 0;
 	for (int i = 0; i < teamSize; i++)
 	{
+		//k = k + 1;
 		for (int j = 0; j < teamSize; j++)
 		{
-			cout << matchInformationStore[i];
+			cout << matchInformationStore[j];
 
 		}
 		cout << endl;
