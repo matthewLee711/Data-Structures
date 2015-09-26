@@ -10,7 +10,7 @@ Index::Index()
 	for (int i = 0; i < 10; i++) pageNumberCopier[i] = { NULL };
 	for (int i = 0; i < 10; i++) wordSize[i] = { NULL };
 	for (int i = 0; i < 10; i++) wordConvert[i] = { NULL };
-	wordArray = new char*[80];//memory allocation for 80 different words
+	//wordArray = new int[80];//memory allocation for 80 different words
 	//for (int i = 0; i < 10; i++) storeArray[i] = { NULL };
 }
 
@@ -24,7 +24,7 @@ void Index::textProcessor(int storeArray)
 	}
 
 	//MAKE SURE OT INCLUDE '\0' to terminate
-	//converts upper to lower case letter and store into 2D array
+	//converts upper to lower case letter and store into character into 2D array
 	if (sorter >= 65 && sorter <= 90 || sorter >= 97 && sorter <= 122 || sorter == 32)
 	{
 		//convert upper case to lowercase
@@ -33,7 +33,6 @@ void Index::textProcessor(int storeArray)
 
 		//send to wordArrayInsert function; this will put words into 2D array
 		wordArrayInsert(sorter);
-
 	}
 	
 	//catches two letter words
@@ -80,6 +79,81 @@ void Index::pageNumberExtractor(int sorter)
 void Index::wordArrayInsert(int sorter)
 {
 	int delimiter = 32;
+
+	//create allocated space for new char* row
+	if (rowCreatorAccessor == 0)
+	{
+		//std::cout << "createRowForArray:" << createRowForArray << std::endl;
+		wordArray[createRowForArray] = new char[80];
+		//std::cout << "createRowForArray: " << createRowForArray << std::endl;
+		
+		debugCounter++;
+		//debug
+		/*if (debugCounter > 1) {
+			wordArray[1][0] = 'c';
+			std::cout << "wordArray[1][0]: " << wordArray[1][1] << std::endl;
+		}*/
+		
+	}
+
+	//2D array
+	//after space found, increment counter for next row
+	//reset row element to zero
+	//reset accessor for row creation
+	if (sorter == delimiter)
+	{
+		//debug
+		//for (int i = 0; i < wordSizeCounter; i++)std::cout << "sorter: " << wordSize[i] << std::endl;
+
+		//allocate exact memory for wordArray row
+		//wordArray = new int[80];
+
+		//copy wordSize into WordArray V2 *CRASHED*
+		//wordArray[wordArrayCounterColumn][wordArrayCounterRow] = testArray[wordArrayCounterRow]; //wordSize[wordArrayCounterRow];
+		//wordArrayCounterRow++;//increment
+
+							  //if wordArrayCounter reaches wordSizeCounter, move to next row in wordArray
+		//if (wordArrayCounterRow == wordSizeCounter)
+		//{
+		wordArrayCounterColumn++;//increase column for next insertion
+		wordArrayCounterRow = 0;//reset row counter
+		createRowForArray++;//move to next row to prepare next row creation
+		rowCreatorAccessor = 0;//reset creator to zero so can prepare for next row creation
+		//}
+
+		//debug statement for 2d array
+		//for (int i = 0; i < wordSizeCounter; i++)std::cout << "wordArray: " << wordArray[i] << std::endl;
+
+		//reset wordSizeCounter to prepare for next word
+	}
+	//this conditional stores character in each row
+	if (sorter != delimiter)
+	{
+		//store character in each row
+		//std::cout << "wordArrayCounterColumn: " << wordArrayCounterColumn << std::endl;
+		wordArray[wordArrayCounterColumn][wordArrayCounterRow] = sorter;
+		//std::cout << "wordArray " << wordArrayCounterRow << ": " << wordArray[0][wordArrayCounterRow] << std::endl;
+
+		//output contents of wordArray debug
+		//if(debugCounter > 1) std::cout << "wordArray " << wordArrayCounterRow << ": " << wordArray[1][wordArrayCounterRow] << std::endl;
+		wordArrayCounterRow++;//increment to store next character
+		rowCreatorAccessor++;//rowCreater incremented so, row creator can't be accessed
+	}
+		
+	
+
+	//wordSize finds size of word and prepares storage into 2D wordArray
+	//wordSize[wordSizeCounter] = sorter;
+	//wordSizeCounter++;
+	
+
+}
+
+void Index::wordArrayBracketedInsert(int sorter) {}
+
+void Index::wordArrayInsert2(int sorter)
+{
+	int delimiter = 32;
 	//2D array
 	//after length and found space after word, allocate 2D memory for word
 	if(sorter == delimiter) 
@@ -94,7 +168,7 @@ void Index::wordArrayInsert(int sorter)
 		//wordSizeCounter++;
 		
 		//allocate exact memory for wordArray row
-		wordArray = new char* [wordSizeCounter];
+		//wordArray = new char* [wordSizeCounter];
 		
 		//copy wordSize into wordArray
 		/*for (int i = 0; i < wordSizeCounter; i++)
@@ -105,8 +179,8 @@ void Index::wordArrayInsert(int sorter)
 		//wordArray[wordArrayCounter] = wordSize[wordArrayCounter];
 		//wordArrayCounter++;//increment
 
-		//copy wordSize into WordArray V2 *CRASHED*
-		wordArray[wordArrayCounterColumn][wordArrayCounterRow] = testArray[wordArrayCounterRow]; //wordSize[wordArrayCounterRow];
+		//copy wordSize into WordArray V2 *CRASHED* USE THIS ONE
+		//wordArray[wordArrayCounterColumn][wordArrayCounterRow] = testArray[wordArrayCounterRow]; //wordSize[wordArrayCounterRow];
 		wordArrayCounterRow++;//increment
 
 		//if wordArrayCounter reaches wordSizeCounter, move to next row in wordArray
@@ -140,15 +214,3 @@ void Index::wordArrayInsert(int sorter)
 	}*/
 	
 }
-/*void Index::ReadPagePublic(char* text)
-{
-
-}
-void Index::ReadTwoWordsPublic(char* text)
-{
-
-}
-void Index::ReadCharacterPublic(char* text)
-{
-
-}*/

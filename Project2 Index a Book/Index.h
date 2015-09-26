@@ -26,16 +26,20 @@ public:
 	int pageNumber;//store page number after converted
 
 	//These declarations are important for word extracter 
-	char** wordArray;//2D array to store each word
+	char* wordArray[80];//2D array to store each word
 	int wordArrayCounterRow = 0;//moves to next element in 2D wordArray
-	int wordArrayCounterColumn = 0;
+	int wordArrayCounterColumn = 0;//Column for storing rows
 	char wordSize[80];//max size of 80 to find size of word
 	int wordSizeCounter = 0;//counter for WordSize
 	char wordConvert[80];//converts sorter into char which will be converted to char*
 	int wordConvertCounter = 0;//wordConvertCOunter to copy number from sort
 	
+	int createRowForArray = 0;//counter for creating row for 2Darray
+	int rowCreatorAccessor = 0;//Access to create row for 2D array
 	//debug array
 	char testArray[6] = { 'a', 'b','c' };
+
+	int debugCounter = 0;
 				   
 	//Functions
 	//All characters are passed through this function
@@ -44,7 +48,12 @@ public:
 	//Page number is extracted and temporarily stored from this function
 	void pageNumberExtractor(int sorter);
 
-	//Words are put into wordArray
+	//Non bracketed words are put into wordArray through this function
 	void wordArrayInsert(int sorter);
+
+	//bracketed wordds are inserted into wordArray through this function
+	void wordArrayBracketedInsert(int sorter);
+
+	void wordArrayInsert2(int sorter);//not needed
 
 };
