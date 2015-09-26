@@ -1,17 +1,250 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <set>
+#include <algorithm>
+#include <ostream>
+#include <iterator>
+#include <vector>
 
 using namespace std;
 
 
 //functions
+void print(const std::string& item)
+{
+	string setHolder[2];
+	//std::cout << item << std::endl;
+	string store = item;
+	//setHolder[0] = store.begin + 3;
+	string::iterator it;
+	//advance(it, 1);
+	//it + 3;
+	//std::distance(store.begin(), it);
+	//it - store.begin();
+
+	//setHolder[0] = item;
+	//setHolder[1] = item;
+	cout << setHolder[0]; //<< setHolder[1];
+}
+
+//Sort the points earned for each player
+void sortThePoints(int* teamNumTags, int* sortedId, int* sortedTag, int numberPlayerTeam1, int numberPlayerTeam2)
+{
+	// SORTING TEAM 1 FIRST
+
+	// Transfering all the data form teamNumTags to sortedTag
+	for (int playerCount = 0; playerCount <= numberPlayerTeam1 + numberPlayerTeam2; playerCount++)
+		sortedTag[playerCount] = teamNumTags[playerCount];
+
+	// filling sortedID with 0 to number of players
+	for (int playerCount = 0; playerCount <= numberPlayerTeam1 + numberPlayerTeam2; playerCount++)
+		sortedId[playerCount] = playerCount;
+
+
+	// Start of Bubble Sorting team 1
+	int playerCount2 = 0;  // this is the start Location for sorting
+	int swapVarible = 0;
+
+	for (int playerCount = 1; playerCount <= numberPlayerTeam1 - 1; playerCount++)
+	{
+		playerCount2 = playerCount + 1;     // starting point for sweep comparison
+		while (playerCount2 <= numberPlayerTeam1)
+		{
+			/*
+			if (sortedTag[playerCount] == sortedTag[playerCount2])
+			{
+			if (sortedId[playerCount] > sortedId[playerCount2])
+			{
+			swapVarible = sortedTag[playerCount2];
+			sortedTag[playerCount2] = sortedTag[playerCount];
+			sortedTag[playerCount] = swapVarible;
+
+			swapVarible = sortedId[playerCount2];
+			sortedId[playerCount2] = sortedId[playerCount];
+			sortedId[playerCount] = swapVarible;
+			}
+			}
+
+			if (sortedTag[playerCount] == sortedTag[playerCount2])
+			{
+			if (sortedId[playerCount] > sortedId[playerCount2])
+			{
+			swapVarible = sortedTag[playerCount2];
+			sortedTag[playerCount2] = sortedTag[playerCount];
+			sortedTag[playerCount] = swapVarible;
+
+			swapVarible = sortedId[playerCount2];
+			sortedId[playerCount2] = sortedId[playerCount];
+			sortedId[playerCount] = swapVarible;
+			}
+			}
+			*/
+
+			if (sortedTag[playerCount] < sortedTag[playerCount2]) // if it is greater swap varibles
+			{
+				swapVarible = sortedTag[playerCount2];
+				sortedTag[playerCount2] = sortedTag[playerCount];
+				sortedTag[playerCount] = swapVarible;
+
+				swapVarible = sortedId[playerCount2];
+				sortedId[playerCount2] = sortedId[playerCount];
+				sortedId[playerCount] = swapVarible;
+
+			}
+			playerCount2++;     // increment playerCount2
+
+		} //end of while loop
+
+	} // end of for loop
+
+	  // Start of bubble sorting for team 2
+
+	  //		playerCount2 = numberPlayerTeam1+1;  // this is the start Location for sorting
+	swapVarible = 0;
+
+	for (int playerCount = numberPlayerTeam1 + 1; playerCount <= (numberPlayerTeam1 + numberPlayerTeam2 - 1); playerCount++)
+	{
+		playerCount2 = playerCount + 1;     // starting point for sweep comparison
+		while (playerCount2 <= (numberPlayerTeam1 + numberPlayerTeam2))
+		{
+			if (sortedTag[playerCount] < sortedTag[playerCount2]) // if it is greater swap varibles
+			{
+				swapVarible = sortedTag[playerCount2];
+				sortedTag[playerCount2] = sortedTag[playerCount];
+				sortedTag[playerCount] = swapVarible;
+
+				swapVarible = sortedId[playerCount2];
+				sortedId[playerCount2] = sortedId[playerCount];
+				sortedId[playerCount] = swapVarible;
+
+
+			}
+			playerCount2++;     // increment playerCount2
+		}//End of While loop
+
+	}//End of for loop
+	cout << "sorted points" << sortedId[0] << sortedTag[0] << teamNumTags[0] << endl;
+	cout << "sorted points" << sortedId[1] << sortedTag[1] << teamNumTags[1] << endl;
+	cout << "sorted points" << sortedId[2] << sortedTag[2] << teamNumTags[2] << endl;
+	cout << "sorted points" << sortedId[3] << sortedTag[3] << teamNumTags[3] << endl;
+	cout << "sorted points" << sortedId[4] << sortedTag[4] << teamNumTags[4] << endl;
+	cout << "sorted points" << sortedId[5] << sortedTag[5] << teamNumTags[5] << endl;
+	cout << "sorted points" << sortedId[6] << sortedTag[6] << teamNumTags[6] << endl;
+	return;
+}
+
+void  sortTheTags(int* teamNumTags, int* sortedId, int* sortedTag, int numberPlayerTeam1, int numberPlayerTeam2)
+{
+	// SORTING TEAM 1 FIRST
+
+	// Transfering all the data form teamNumTags to sortedTag
+	for (int playerCount = 0; playerCount <= numberPlayerTeam1 + numberPlayerTeam2; playerCount++)
+		sortedTag[playerCount] = teamNumTags[playerCount];
+
+	// filling sortedID with 0 to number of players
+	for (int playerCount = 0; playerCount <= numberPlayerTeam1 + numberPlayerTeam2; playerCount++)
+		sortedId[playerCount] = playerCount;
+
+
+	// Start of Bubble Sorting team 1
+	int playerCount2 = 0;  // this is the start Location for sorting
+	int swapVarible = 0;
+
+	for (int playerCount = 0; playerCount <= numberPlayerTeam1 - 2; playerCount++)
+	{
+		playerCount2 = playerCount + 1;     // starting point for sweep comparison
+		while (playerCount2 <= numberPlayerTeam1 - 1)
+		{
+			/*
+			if (sortedTag[playerCount] == sortedTag[playerCount2])
+			{
+			if (sortedId[playerCount] > sortedId[playerCount2])
+			{
+			swapVarible = sortedTag[playerCount2];
+			sortedTag[playerCount2] = sortedTag[playerCount];
+			sortedTag[playerCount] = swapVarible;
+
+			swapVarible = sortedId[playerCount2];
+			sortedId[playerCount2] = sortedId[playerCount];
+			sortedId[playerCount] = swapVarible;
+			}
+			}
+
+			if (sortedTag[playerCount] == sortedTag[playerCount2])
+			{
+			if (sortedId[playerCount] > sortedId[playerCount2])
+			{
+			swapVarible = sortedTag[playerCount2];
+			sortedTag[playerCount2] = sortedTag[playerCount];
+			sortedTag[playerCount] = swapVarible;
+
+			swapVarible = sortedId[playerCount2];
+			sortedId[playerCount2] = sortedId[playerCount];
+			sortedId[playerCount] = swapVarible;
+			}
+			}
+			*/
+
+			if (sortedTag[playerCount] < sortedTag[playerCount2]) // if it is greater swap varibles
+			{
+				swapVarible = sortedTag[playerCount2];
+				sortedTag[playerCount2] = sortedTag[playerCount];
+				sortedTag[playerCount] = swapVarible;
+
+				swapVarible = sortedId[playerCount2];
+				sortedId[playerCount2] = sortedId[playerCount];
+				sortedId[playerCount] = swapVarible;
+
+			}
+			playerCount2++;     // increment playerCount2
+
+		} //end of while loop
+
+	} // end of for loop
+
+	  // Start of bubble sorting for team 2
+
+	  //		playerCount2 = numberPlayerTeam1+1;  // this is the start Location for sorting
+	swapVarible = 0;
+
+	for (int playerCount = numberPlayerTeam1; playerCount <= (numberPlayerTeam1 + numberPlayerTeam2 - 2); playerCount++)
+	{
+		playerCount2 = playerCount + 1;     // starting point for sweep comparison
+		while (playerCount2 <= (numberPlayerTeam1 + numberPlayerTeam2 - 1))
+		{
+			if (sortedTag[playerCount] < sortedTag[playerCount2]) // if it is greater swap varibles
+			{
+				swapVarible = sortedTag[playerCount2];
+				sortedTag[playerCount2] = sortedTag[playerCount];
+				sortedTag[playerCount] = swapVarible;
+
+				swapVarible = sortedId[playerCount2];
+				sortedId[playerCount2] = sortedId[playerCount];
+				sortedId[playerCount] = swapVarible;
+
+
+			}
+			playerCount2++;     // increment playerCount2
+		}//End of While loop
+
+	}//End of for loop
+	cout << "sorted tags" << sortedId[0] << sortedTag[0] << teamNumTags[0] << endl;
+	cout << "sorted tags" << sortedId[1] << sortedTag[1] << teamNumTags[1] << endl;
+	cout << "sorted tags" << sortedId[2] << sortedTag[2] << teamNumTags[2] << endl;
+	cout << "sorted tags" << sortedId[3] << sortedTag[3] << teamNumTags[3] << endl;
+	cout << "sorted tags" << sortedId[4] << sortedTag[4] << teamNumTags[4] << endl;
+	cout << "sorted tags" << sortedId[5] << sortedTag[5] << teamNumTags[5] << endl;
+	return;
+}
+
 
 // This function gets an integer from a string with a specfied column
 // and returns the value in that column
 int getIntFromString(string teamData, int selectColumn)
 {
-	int theAns = 88888;
+	int chooseColumn = selectColumn;
+	int theAns = 0;
 	int columnCount = 1;
 	string delimiter = " ";
 	string teamData2 = teamData;
@@ -20,9 +253,18 @@ int getIntFromString(string teamData, int selectColumn)
 	while ((pos = teamData2.find(delimiter)) != std::string::npos) {
 
 		token = teamData2.substr(0, pos);
-		if (columnCount == selectColumn) theAns = stoi(token);
+		if (columnCount == chooseColumn)
+			theAns = stoi(token) - 1;
 		teamData2.erase(0, pos + delimiter.length());
+		//cout << "columnCount: " << columnCount << ", the ans:" << " " << theAns << ", token: " << token << endl;
 		columnCount++;
+	}
+	if (chooseColumn == 4)
+	{
+		//teamData2.erase(0, pos + delimiter.length());
+		token = teamData2.substr(0, pos);
+		theAns = stoi(token);
+		//cout << "ANs exiting: " << theAns << endl;
 	}
 	return theAns;
 }
@@ -50,37 +292,37 @@ void matchDataOrganizer(string matchData)
 	std::string token;
 	//While loop focuses on finding the delimiter ' ', removing it, and send match data to specific arrays
 	while ((pos = matchDataSort.find(delimiter)) != std::string::npos) {
-		//stores each character or number
-		token = matchDataSort.substr(0, pos);
-		//std::cout << "token: " << token << std::endl;//output info from token
+	//stores each character or number
+	token = matchDataSort.substr(0, pos);
+	//std::cout << "token: " << token << std::endl;//output info from token
 
-		//Convert (string) token to int Send token to function to count who's been hit
-		playerData = stoi(token);
+	//Convert (string) token to int Send token to function to count who's been hit
+	playerData = stoi(token);
 
-		//deletes the time
-		if (playerData >= 100)
-		{
-			playerData = 0;//delete element by set to zero
-			infoCounter++;
-			//include statement to gather score! -- if number 3 = 3 = points
-		}
-		else
-		{
-			//send to tagged vector
-			//pass back to main
-			//main(playerData);
-			
+	//deletes the time
+	if (playerData >= 100)
+	{
+	playerData = 0;//delete element by set to zero
+	infoCounter++;
+	//include statement to gather score! -- if number 3 = 3 = points
+	}
+	else
+	{
+	//send to tagged vector
+	//pass back to main
+	//main(playerData);
 
-			infoCounter++;
-		}
 
-		//Medium Verbosity
-		//mediumVerbosity(taggerId, matchDataSort);
-		//make sure to put matchline team into string vector
+	infoCounter++;
+	}
 
-		infoCounter++;
-		cout << "output matchDataSort: " << matchDataSort << endl;
-		matchDataSort.erase(0, pos + delimiter.length());//delete and move up
+	//Medium Verbosity
+	//mediumVerbosity(taggerId, matchDataSort);
+	//make sure to put matchline team into string vector
+
+	infoCounter++;
+	cout << "output matchDataSort: " << matchDataSort << endl;
+	matchDataSort.erase(0, pos + delimiter.length());//delete and move up
 	}
 
 	//cout << "matchLine" << matchLine << endl;
@@ -124,22 +366,22 @@ int main(int playerData)
 	/*int team1SizeCounter = 0;
 	while (getline(team1, team1Data))
 	{
-		
-		if (team1SizeCounter == 1)
-		{
-			team1Size = stoi(team1Data);
-		}
-		cout << "teamData" << team1Data << endl;
-		team1SizeCounter++;
+
+	if (team1SizeCounter == 1)
+	{
+	team1Size = stoi(team1Data);
+	}
+	cout << "teamData" << team1Data << endl;
+	team1SizeCounter++;
 	}
 	int team2SizeCounter = 0;
 	while (getline(team2, team2Data))
 	{
-		if (team2SizeCounter == 1)
-		{
-			team2Size = stoi(team2Data);
-		}
-		team2SizeCounter++;
+	if (team2SizeCounter == 1)
+	{
+	team2Size = stoi(team2Data);
+	}
+	team2SizeCounter++;
 	}
 	int teamSize;
 	teamSize = team1Size + team2Size;
@@ -168,8 +410,8 @@ int main(int playerData)
 			team1IndividualNames = new string[team1Size];
 		}
 		//delete id number in front of name and put name into "team1IndividualNames" string array
-		else if(team1Counter > 1)
-		{ 
+		else if (team1Counter > 1)
+		{
 			team1IndividualNames[team1IndexPlacement] = team1Data.substr(2).append(team1Data.substr(0, 0));
 			//cout << "team1IndividualNames: " << team1IndividualNames[1] << endl;
 			team1IndexPlacement++;
@@ -207,10 +449,27 @@ int main(int playerData)
 
 		team2Counter++;
 	}
-	
+
 	//debug output of team1/2 Individual arrays
 	//for (int i = 0; i < team1Size; i++) cout << "teamindividualnames: "<< team1IndividualNames[i] << endl;
 	//for (int i = 0; i < team2Size; i++) cout << "teamindividualnames: " << team2IndividualNames[i] << endl;
+
+	//Team Name Sorter
+	/*set <string> teamNameOrder; //= team1Name + ' ' + team2Name;
+	teamNameOrder.insert(team1Name); teamNameOrder.insert(team2Name);
+	for_each(teamNameOrder.begin(), teamNameOrder.end(), &print);*/
+
+	//Team Name Sorter
+	/*int result;
+	char* teamNameStoreSort[30] = ;
+	//Performs a run through number of strings
+	for (int pass = 0; pass < size - 1; ++pass) {
+	//Runs through each string for compare
+	for (int j = 0; j < size - 1 - pass; ++j) {
+
+	}*/
+
+
 
 	//Combine both arrays into one
 	int teamSize = team1Size + team2Size;
@@ -261,7 +520,7 @@ int main(int playerData)
 	//Magic equation to find any element in 2D array
 	//column + (NumColumn * row)
 	// x + (xMax * y);
-	
+
 	//int** matchInformationStore2 = new int*[teamSize][test];
 	//set all elements in matchInformationStore to '0'
 	for (int i = 0; i < teamSize*teamSize; i++)
@@ -275,7 +534,6 @@ int main(int playerData)
 		for (int j = 0; j < teamSize; j++)
 		{
 			cout << matchInformationStore[i];
-
 		}
 		cout << endl;
 	}
@@ -320,15 +578,19 @@ int main(int playerData)
 			int tagX = getIntFromString(matchData, 2);//x coordinate in 2D array
 			cout << "tagX: " << tagX << endl;
 			//This goes to exact position in 2D array and tracks who hit who. Extra hits are added on top of existing number
-			matchInformationStore[tagX +  (tagY * teamSize)]= matchInformationStore[tagX + (tagY * teamSize)]+1;
+			matchInformationStore[tagX + (tagY * teamSize)] = matchInformationStore[tagX + (tagY * teamSize)] + 1;
+			//cout << "matchInforstore: " << matchInformationStore[tagX + (tagY * teamSize)] << endl;
 
-			cout << "MatchInformation Store being passed: " << matchInformationStore[tagX + (tagY * teamSize)] << endl;
+			//cout << "MatchInformation Store being passed: " << matchInformationStore[tagX + (tagY * teamSize)] << endl;
 			//matchInformationStore[tagX + (tagY * teamSize)]++;
 
-			teamNumberOfTags[tagY - 1]++;//Keeps track of number of tags each player got
-			//teamNumberOfTags[5] = 4;
-			teamScore[tagY] = teamScore[tagY] + getIntFromString(matchData, 4);//Keeps score for each player
-			
+			teamNumberOfTags[tagY]++;//Keeps track of number of tags each player got
+									 //teamNumberOfTags[5] = 4;
+									 //int test = stoi(matchData.substr(8).append(matchData.substr(0, 1)));
+									 //int* test = (int*)5;
+									 //int test = getIntFromString(matchData, 4);
+			teamScore[tagY - 1] = teamScore[tagY - 1] + getIntFromString(matchData, 4);//Keeps score for each player
+
 
 		}//End of else
 
@@ -337,9 +599,7 @@ int main(int playerData)
 
 	//MEDIUM VERBOSITY -- How many hits each person got
 	for (int i = 0; i < teamSize; i++) cout << "TeamNumber of tags " << teamIndividualNames[i] << " hit: " << teamNumberOfTags[i] << endl;
-	
 
-	//for (int i = 0; i < teamSize; i++) cout << "TeamSCore" << teamScore[i] << endl;
 	//Medium Verbosity -- How many points each person got
 	for (int i = 0; i < teamSize; i++) cout << "TeamScore " << teamIndividualNames[i] << " got: " << teamScore[i] << endl;
 
@@ -347,15 +607,89 @@ int main(int playerData)
 	//int k = 0;
 	for (int i = 0; i < teamSize; i++)
 	{
-		//k = k + 1;
 		for (int j = 0; j < teamSize; j++)
 		{
-			cout << matchInformationStore[j];
+			cout << matchInformationStore[j + (6 * i)];
+			//cout << teamIndividualNames[i];
 
 		}
-		cout << endl;
+		cout << teamIndividualNames[i] << endl;
 	}
-	
+
+	//Organize output of who hit who
+	//Variable and array declaration for this
+	//int* teamNumTags = new int[20];
+	int* sortedId = new int[teamSize]; //Create Id tag array to be sorted based on sortedTag
+	int* sortedTag = new int[teamSize]; //Create a tag array to be sorted
+	int numberPlayerTeam1 = 0;
+	int numberPlayerTeam2 = 0;
+
+	//Function to output who hit who
+	sortTheTags(teamNumberOfTags, sortedId, sortedTag, team1Size, team2Size);
+
+	int* sortedIdPoints = new int[teamSize]; //Create Id tag array to be sorted based on sortedTag
+											 //int* sortedTag = new int[teamSize]; //Create a tag array to be sorted
+
+	sortThePoints(teamScore, sortedIdPoints, sortedTag, team1Size, team2Size);
+
+	//Output sorted information
+	for (int i = 0; i < 6; i++)
+	{
+		//cout << "Name: " << teamIndividualNames[sortedId[i]] << " got " << sortedTag[i] << endl;
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		//cout << "Name: " << sortedId[i] << " got " << sortedTag[i] << endl;
+	}
+
+	//Choose Verbosity you want
+	string enterVerbosityChoice;
+
+	//While loop to let you choose verbosity output
+	int teamOutputCounter = 0;
+	bool stop = true;
+	while (stop != false)
+	{
+		cout << "Choose the verbosity output you would like of the game: \n"
+			<< "'vlow' is Low Verbosity and shows the total score and who won.\n"
+			<< "'vmed' is Medium Verbosity and shows how many tags each player got and the individual best score of both teams. \n"
+			<< "'vhigh' is High Verbosity and shows exactly who hit who and shows the winning team. \n";
+		cout << "Please enter a choice: "; cin >> enterVerbosityChoice; cout << endl;
+
+
+		//conditional to output choice
+		if (enterVerbosityChoice == "vlow")
+		{
+			//lowVerbosity
+			//can insert function and return
+		}
+		if (enterVerbosityChoice == "vmed")
+		{
+			//mediumverbosity
+			//Display team name and number of tags each player in team1 made
+			cout << team1Name << ": " << endl << endl;
+			while (teamOutputCounter != team1Size)
+			{
+				//cout << "Name: " << teamIndividualNames[sortedId[teamOutputCounter]] << " got " << sortedTag[teamOutputCounter] << endl;
+				teamOutputCounter++;
+			}
+
+			cout << endl;
+			//Display team name and number of tags each player in team2 made
+			cout << team2Name << ": " << endl << endl;
+			//for (int i = team1Size; i < teamSize; i++) cout << "Name: " << teamIndividualNames[sortedId[i]] << " got " << sortedTag[i] << endl;
+
+			cout << "Best score from " << team1Name << ": ";
+			cout << "Best score from " << team2Name << ": ";
+		}
+		if (enterVerbosityChoice == "vhigh")
+		{
+			//highVerbosity
+
+		}
+
+	}
+
 	//Player Name Arrays
 	//string team1PlayerNames;
 	//string team2PlayerNames;
@@ -368,16 +702,16 @@ int main(int playerData)
 	//Number of Tags each person gets Array
 	//int* team1NumberOfTags = new int[matchSize];
 	//int* team2NumberOfTags = new int[matchSize];
-	
+
 
 	int dataCounter = 0;
 
 	//While loop to place information in each array
 	/*while (dataCounter != 100)
 	{
-		dataCounter++;
+	dataCounter++;
 	}*/
 
-	
+
 
 }
